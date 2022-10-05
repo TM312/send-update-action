@@ -9,11 +9,11 @@ async function main() {
     Setup.checkRequiredVarsAvailable('GITHUB_TOKEN')
 
     // inputs from action
-    const filepath: string = core.getInput('filepath');
+    const filepath_changelog: undefined | string = core.getInput('filepath_changelog');
     const url: string = core.getInput('url');
 
     // Check if file path exist and file content can be loaded 
-    const file = new File(filepath);
+    const file = new File(filepath_changelog);
     
     // send request to API
     const response = await sendRequest(url, file.filepath);
@@ -38,7 +38,7 @@ async function main() {
     // }
   } catch (error) {
     console.log(error);
-    core.setOutput('Set filepath', core.getInput('filepath'));
+    core.setOutput('Set filepath_changelog', core.getInput('filepath_changelog'));
     core.setOutput('Set url', core.getInput('url'));
     core.setFailed(error.message);
   }

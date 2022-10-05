@@ -1,8 +1,8 @@
-name: 'Send file'
-description: 'Send an file '
+name: 'Send update to API'
+description: 'Send an repo update to an API'
 inputs:
-  filepath:
-    description: 'The path to the specified file relative to the root.'
+  filepath_changelog:
+    description: 'The filepath to CHANGELOG.md (or alternative file that is used to track updates) relative to the root.'
     required: true
   url:
     description: 'The API url to which the POST-request is being sent.'

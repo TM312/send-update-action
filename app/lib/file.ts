@@ -2,22 +2,29 @@ import * as fs from 'fs';
 import * as path from 'path';
 
 class File {
-  filepath: string;
-  fileContent: string;
+  filepath: null | string;
+  fileContent: null | string;
 
-  constructor (filepath: string) {
+  constructor (filepath: undefined | string) {
     const root = path.join(process.env.GITHUB_WORKSPACE || '', './')
 
-    if (fs.statSync(root).isDirectory()) {
-      filepath = path.join(root, filepath)
+    let filepathFull = null;
+    let fileContent = null;
+
+    if (!!filepath) {
+      if (fs.statSync(root).isDirectory()) {
+        filepathFull = path.join(root, filepath)
+      }
+
+      if (!fs.existsSync(filepathFull)) {
+        throw new Error(`The file ${filepathFull} does not exist found.`)
+      }
+
+      fileContent = JSON.parse(fs.readFileSync(filepathFull, { encoding: 'utf-8' }))
     }
 
-    if (!fs.existsSync(filepath)) {
-      throw new Error(`The file ${filepath} does not exist found.`)
-    }
-
-    this.filepath = filepath
-    this.fileContent = JSON.parse(fs.readFileSync(filepath, { encoding: 'utf-8' }))
+    this.filepath = filepathFull;
+    this.fileContent = fileContent;
   }
 }
 
