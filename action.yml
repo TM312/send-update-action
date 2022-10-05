@@ -1,0 +1,17 @@
+name: 'Send file'
+description: 'Send an file '
+inputs:
+  filepath:
+    description: 'The path to the specified file relative to the root.'
+    required: true
+  url:
+    description: 'The API url to which the POST-request is being sent.'
+    required: true
+
+outputs:
+  response: # id of output
+    description: 'The server request response from the API'
+
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
