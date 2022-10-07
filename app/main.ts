@@ -4,7 +4,7 @@ import Setup from './lib/setup';
 import File from './lib/file';
 import sendRequest from './lib/sendRequest';
 
-async function main() {
+export async function run() {
   try {
     const payload = JSON.stringify(github.context.payload, undefined, 2)
     console.log(`The event payload is: ${payload}`);
@@ -47,5 +47,3 @@ async function main() {
     core.setFailed(error.message);
   }
 }
-
-main();
