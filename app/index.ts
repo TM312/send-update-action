@@ -7,7 +7,7 @@ import sendRequest from './lib/sendRequest';
 async function main() {
   try {
     const payload = JSON.stringify(github.context.payload, undefined, 2)
-    console.log(`The event payload: ${payload}`);
+    console.log(`The event payload is: ${payload}`);
 
     Setup.debug()
     // Setup.checkRequiredVarsAvailable('GITHUB_TOKEN')
