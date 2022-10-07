@@ -1,6 +1,7 @@
 FROM node:16-alpine 
 LABEL version=0.1.0
-ADD ./app /app
-WORKDIR /app
-RUN cd /app && npm i
-CMD ["node", "/app/send-update.ts"]
+ADD ./src /src
+# WORKDIR /src
+RUN cd /src && npm i
+RUN npm run build
+CMD ["node", "/build/send-update.js"]
