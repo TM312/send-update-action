@@ -30,7 +30,7 @@ jobs:
   send-changelog:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - uses: actions/send-file-action@v0.1
       with:
         filepath_changelog: 'CHANGELOG.md'
