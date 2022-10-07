@@ -1,10 +1,14 @@
-import * as core from '@actions/core';
+import core from '@actions/core';
+import github from '@actions/github';
 import Setup from './lib/setup';
 import File from './lib/file';
 import sendRequest from './lib/sendRequest';
 
 async function main() {
   try {
+    const payload = JSON.stringify(github.context.payload, undefined, 2)
+    console.log(`The event payload: ${payload}`);
+
     Setup.debug()
     Setup.checkRequiredVarsAvailable('GITHUB_TOKEN')
 
