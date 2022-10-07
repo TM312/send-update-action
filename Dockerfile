@@ -6,4 +6,4 @@ COPY . .
 RUN npm i
 RUN npm run build
 
-CMD ["node", "./build/send-update.js"]
+CMD ["node", "/app/build/send-update.js"]
