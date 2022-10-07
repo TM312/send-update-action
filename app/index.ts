@@ -10,7 +10,7 @@ async function main() {
     console.log(`The event payload: ${payload}`);
 
     Setup.debug()
-    Setup.checkRequiredVarsAvailable('GITHUB_TOKEN')
+    // Setup.checkRequiredVarsAvailable('GITHUB_TOKEN')
 
     // inputs from action
     const filepath_changelog: undefined | string = core.getInput('filepath_changelog');
