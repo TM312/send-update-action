@@ -9,15 +9,19 @@ export async function run() {
     const payload = JSON.stringify(github.context.payload, undefined, 2)
     console.log(`The event payload is: ${payload}`);
 
-    Setup.debug()
+    // Setup.debug()
     // Setup.checkRequiredVarsAvailable('GITHUB_TOKEN')
 
     // inputs from action
     const filepath_changelog: undefined | string = core.getInput('filepath_changelog');
     const url: string = core.getInput('url');
+    console.log("filepath_changelog:", filepath_changelog)
+    console.log("url:", url)
 
     // Check if file path exist and file content can be loaded 
     const file = new File(filepath_changelog);
+    console.log("filepath:", file.filepath)
+    console.log("fileContent:", file.fileContent)
     
     // send request to API
     const response = await sendRequest(url, file.filepath);
