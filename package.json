@@ -2,7 +2,7 @@
   "name": "send_update_action",
   "version": "1.0.0",
   "description": "",
-  "main": "app/send-update.ts",
+  "main": "src/send-update.ts",
   "scripts": {
     "build": "./node_modules/typescript/bin/tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
