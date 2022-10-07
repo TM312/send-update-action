@@ -14,13 +14,17 @@ class File {
     if (!!filepath) {
       if (fs.statSync(root).isDirectory()) {
         filepathFull = path.join(root, filepath)
+        console.log("filepathFull:", filepathFull)
       }
 
       if (!filepathFull || (!!filepathFull && !fs.existsSync(filepathFull))) {
         throw new Error(`The file ${filepathFull} does not exist found.`)
       }
 
-      fileContent = JSON.parse(fs.readFileSync(filepathFull, { encoding: 'utf-8' }))
+      console.log("fs.existsSync(filepathFull):", fs.existsSync(filepathFull))
+
+      fileContent = fs.readFileSync(filepathFull, { encoding: 'utf-8' })
+      console.log("fileCOntent:", fileContent)
     }
 
     this.filepath = filepathFull;
