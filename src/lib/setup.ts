@@ -3,11 +3,12 @@ import core from '@actions/core';
 class Setup {
   static debug () {
     // Metadate for debugging
-    core.debug(
-      ` Available environment variables:\n -> ${Object.keys(process.env)
-        .map(i => i + ' : ' + process.env[i])
-        .join('\n -> ')}`
-    )
+    // core.debug(
+    //   ` Available environment variables:\n -> ${Object.keys(process.env)
+    //     .map(i => i + ' : ' + process.env[i])
+    //     .join('\n -> ')}`
+    // )
+    core.getInput('filepath_changelog')
 
     core.debug(`\nSelected GITHUB_WORKSPACE: ${process.env.GITHUB_WORKSPACE}`)
   }

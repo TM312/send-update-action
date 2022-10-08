@@ -1,7 +1,7 @@
 import * as core from '@actions/core';
 import * as github from '@actions/github';
-import Setup from './lib/setup';
-import File from './lib/file';
+// import Setup from './lib/setup';
+import getFileBuffer from './lib/getFileBuffer';
 import sendRequest from './lib/sendRequest';
 
 export async function run() {
@@ -15,39 +15,42 @@ export async function run() {
     // inputs from action
     const filepath_changelog: undefined | string = core.getInput('filepath_changelog');
     const url: string = core.getInput('url');
-    console.log("filepath_changelog:", filepath_changelog)
-    console.log("url:", url)
-
+    let file: null | Buffer = null;
+    
     // Check if file path exist and file content can be loaded 
-    const file = new File(filepath_changelog);
-    console.log("filepath:", file.filepath)
-    console.log("fileContent:", file.fileContent)
+    if (!!filepath_changelog) {
+      file = await getFileBuffer(filepath_changelog);
+    }
+
+    const dataInput = {
+      payload: payload,
+      file: file
+    }
     
     // send request to API
-    const response = await sendRequest(url, file.filepath);
+    const response = await sendRequest(url, dataInput);
 
-    // const statusCode = response.status;
-    // const data = response.data;
-    // const outputObject = {
-    //   url,
-    //   method,
-    //   statusCode,
-    //   data
-    // };
+    const statusCode = response.status;
+    const data = response.data;
+    const outputObject = {
+      url,
+      statusCode,
+      data
+    };
 
-    // const consoleOutputJSON = JSON.stringify(outputObject, undefined, 2);
-    // console.log(consoleOutputJSON);
+    const consoleOutputJSON = JSON.stringify(outputObject, undefined, 2);
+    console.log(consoleOutputJSON);
 
-    // if (statusCode >= 400) {
-    //   core.setFailed(`HTTP request failed with status code: ${statusCode}`);
-    // } else {
-    //   const outputJSON = JSON.stringify(outputObject);
-    //   core.setOutput('output', outputJSON);
-    // }
+    if (statusCode >= 400) {
+      core.setFailed(`HTTP request failed with status code: ${statusCode}`);
+    } else {
+      const outputJSON = JSON.stringify(outputObject);
+      core.setOutput('output', outputJSON);
+    }
   } catch (error) {
     console.log(error);
+    core.setFailed(error.message);
     core.setOutput('Set filepath_changelog', core.getInput('filepath_changelog'));
     core.setOutput('Set url', core.getInput('url'));
-    // core.setFailed(error.message);
   }
 }
