@@ -8,7 +8,7 @@ class Setup {
     //     .map(i => i + ' : ' + process.env[i])
     //     .join('\n -> ')}`
     // )
-    core.getInput('filepath_changelog')
+    core.getInput('filepath')
 
     core.debug(`\nSelected GITHUB_WORKSPACE: ${process.env.GITHUB_WORKSPACE}`)
   }

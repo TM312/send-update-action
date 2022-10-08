@@ -1,19 +1,19 @@
 # Send update action
 
-This action sends a file from the repo to a specified url as a POST-request.
+This action sends the event details and optionally a file from the repo to a specified url as a POST-request.
 
 
 ## Inputs
 
 | Parameter     | Required | Default  | Info                                                     |
 | ----------    | -------- | -------- | -------------------------------------------------------- |
-| `filepath_changelog`    | `false`   |  `CHANGELOG.md`    | The path to CHANGELOG.md relative to the root. |
+| `filepath`    | `false`   |      | The filepath relative to the root. |
 | `url`    | `true`   |          | The API url to which the POST-request is being sent.|
 
 
 ## Outputs
 
-- `response`: The API response of the POST-request.
+- `response`: The API response of the POST-request as a JSON-string.
 
 
 ## Example usage
@@ -27,16 +27,14 @@ on:
       - main
 
 jobs:
-  send-changelog:
+  send-update:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - uses: actions/send-file-action@v0.1
+    - uses: actions/send-update-action@v0.1
       with:
-        filepath_changelog: 'CHANGELOG.md'
-        url: 'https://ktyneweuinbildzchkli.functions.supabase.co/hello'
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
-      
+        filepath: 'CHANGELOG.md'
+        url: 'https://ktyneweuinbildzchkli.functions.supabase.co/hello'      
 ```
 
 **Important**: The job must include the checkout action before the send-file action, otherwise it is not possible to send the specified file in the latter.

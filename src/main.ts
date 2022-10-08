@@ -12,13 +12,13 @@ export async function run() {
     // Setup.checkRequiredVarsAvailable('GITHUB_TOKEN')
 
   // inputs
-    const filepath_changelog: undefined | string = core.getInput('filepath_changelog');
+    const filepath: undefined | string = core.getInput('filepath');
     const url: string = core.getInput('url');
     
     // Check if file path exist and file content can be loaded 
     let file: null | Buffer = null;
-    if (!!filepath_changelog) {
-      file = await getFileBuffer(filepath_changelog);
+    if (!!filepath) {
+      file = await getFileBuffer(filepath);
     }
 
     const dataInput = {
