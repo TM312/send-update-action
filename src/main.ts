@@ -49,7 +49,7 @@ export async function run() {
     }
   } catch (error) {
     console.log(error);
-    core.setFailed(error.message);
+    // core.setFailed(error.message);
     core.setOutput('Set filepath_changelog', core.getInput('filepath_changelog'));
     core.setOutput('Set url', core.getInput('url'));
   }
