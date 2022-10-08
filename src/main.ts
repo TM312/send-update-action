@@ -7,17 +7,16 @@ import sendRequest from './lib/sendRequest';
 export async function run() {
   try {
     const payload = JSON.stringify(github.context.payload, undefined, 2)
-    console.log(`The event payload is: ${payload}`);
 
     // Setup.debug()
     // Setup.checkRequiredVarsAvailable('GITHUB_TOKEN')
 
-    // inputs from action
+  // inputs
     const filepath_changelog: undefined | string = core.getInput('filepath_changelog');
     const url: string = core.getInput('url');
-    let file: null | Buffer = null;
     
     // Check if file path exist and file content can be loaded 
+    let file: null | Buffer = null;
     if (!!filepath_changelog) {
       file = await getFileBuffer(filepath_changelog);
     }
@@ -30,27 +29,13 @@ export async function run() {
     // send request to API
     const response = await sendRequest(url, dataInput);
 
-    const statusCode = response.status;
-    const data = response.data;
-    const outputObject = {
-      url,
-      statusCode,
-      data
-    };
-
-    const consoleOutputJSON = JSON.stringify(outputObject, undefined, 2);
-    console.log(consoleOutputJSON);
-
-    if (statusCode >= 400) {
-      core.setFailed(`HTTP request failed with status code: ${statusCode}`);
+    if (response.status !== 200 && response.status !== 201) {
+      core.setFailed(`HTTP request failed with status code: ${response.status}`);
     } else {
-      const outputJSON = JSON.stringify(outputObject);
-      core.setOutput('output', outputJSON);
+      const responseJSON = JSON.stringify(response);
+      core.setOutput('response', responseJSON);
     }
   } catch (error) {
-    console.log(error);
-    // core.setFailed(error.message);
-    core.setOutput('Set filepath_changelog', core.getInput('filepath_changelog'));
-    core.setOutput('Set url', core.getInput('url'));
+    core.setFailed(JSON.stringify(error));
   }
 }
