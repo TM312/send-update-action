@@ -19,7 +19,7 @@ This action sends the event details and optionally a file from the repo to a spe
 ## Example usage
 
 ```yml
-name: Send log update to Shyp
+name: Send log update to <name-of-api>
 
 on:
   push:
@@ -33,8 +33,8 @@ jobs:
     - uses: actions/checkout@v3
     - uses: actions/send-update-action@v0.1
       with:
-        filepath: 'CHANGELOG.md'
-        url: 'https://ktyneweuinbildzchkli.functions.supabase.co/hello'      
+        filepath: <filepath-to-file>
+        url: <url-to-api>      
 ```
 
 **Important**: The job must include the checkout action before the send-file action, otherwise it is not possible to send the specified file in the latter.
